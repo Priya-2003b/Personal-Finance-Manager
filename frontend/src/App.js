@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import AuthForm from "./components/AuthForm";
@@ -9,12 +9,18 @@ import CategoryList from "./components/CategoryList";
 import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-const Navbar = () => {
+/* ================= NAVBAR ================= */
+const Navbar = ({ theme, setTheme }) => {
   const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
+
   const navProps = {
-    'data-bs-toggle': 'collapse',
-    'data-bs-target': '#navbarNav'
+    "data-bs-toggle": "collapse",
+    "data-bs-target": "#navbarNav"
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -23,18 +29,27 @@ const Navbar = () => {
         <Link to="/" className="navbar-brand" {...navProps}>
           Personal Finance Manager
         </Link>
+
         <button
-          className="navbar-toggler"
+          className="nav-link text-white"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="d-flex align-items-center gap-2 ms-lg-auto flex-wrap">
+
+            {/* 🌙 SINGLE THEME BUTTON */}
+            <button
+              className="btn btn-outline-light btn-sm"
+              onClick={toggleTheme}
+            >
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
+
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" className="btn btn-outline-light btn-sm" {...navProps}>
@@ -52,8 +67,18 @@ const Navbar = () => {
                 <Link to="/profile" className="btn btn-outline-light btn-sm" {...navProps}>
                   Profile
                 </Link>
-                <span className="text-white small d-none d-md-inline">Hi, {user?.name}</span>
-                <button className="btn btn-outline-light btn-sm" onClick={() => { logout(); navigate('/'); }}>
+
+                <span className="text-white small d-none d-md-inline">
+                  Hi, {user?.name}
+                </span>
+
+                <button
+                  className="btn btn-outline-light btn-sm"
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
                   Logout
                 </button>
               </>
@@ -69,21 +94,26 @@ const Navbar = () => {
   );
 };
 
+/* ================= PUBLIC ROUTE ================= */
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+
   if (loading) {
     return (
       <div className="container text-center py-5">
-        <div className="spinner-border text-primary" role="status" />
+        <div className="spinner-border text-primary" />
       </div>
     );
   }
+
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
   }
+
   return children;
 };
 
+/* ================= ROUTES ================= */
 function AppRoutes() {
   return (
     <Routes>
@@ -99,22 +129,40 @@ function AppRoutes() {
   );
 }
 
+/* ================= FOOTER ================= */
 const Footer = () => (
   <footer className="mt-5 py-3 text-center text-muted small border-top">
     <div className="container">
-      Personal Finance Manager &middot; Track your income and expenses
+      Personal Finance Manager · Track your income and expenses
     </div>
   </footer>
 );
 
+/* ================= MAIN APP ================= */
 function App() {
+  const [theme, setTheme] = useState("light");
+
+  // Load saved theme
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) setTheme(saved);
+  }, []);
+
+  // Apply + save theme
+  useEffect(() => {
+    document.body.className = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
+        <Navbar theme={theme} setTheme={setTheme} />
+
         <div className="container">
           <AppRoutes />
         </div>
+
         <Footer />
       </Router>
     </AuthProvider>

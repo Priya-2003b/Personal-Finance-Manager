@@ -70,3 +70,19 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.setBudget = async (req, res) => {
+  try {
+    const { budget } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { budget },
+      { new: true }
+    ).select('-password');
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to set budget' });
+  }
+};

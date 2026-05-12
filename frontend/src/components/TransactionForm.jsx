@@ -17,10 +17,10 @@ const TransactionForm = () => {
   const [loadingData, setLoadingData] = useState(isEdit);
 
   useEffect(() => {
-    api.get('/categories')
-      .then((res) => setCategories(res.data))
-      .catch(() => {});
-  }, []);
+  api.get(`/categories?type=${type}`)
+    .then((res) => setCategories(res.data))
+    .catch(() => {});
+}, [type]);
 
   useEffect(() => {
     if (isEdit) {

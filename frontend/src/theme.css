@@ -1,0 +1,157 @@
+/* ===== GLOBAL ===== */
+body {
+  transition: all 0.3s ease-in-out;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===== LIGHT MODE ===== */
+body.light {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Light cards */
+body.light .card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+body.light .card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== DARK MODE ===== */
+body.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Cards */
+body.dark .card {
+  background: #1e293b;
+  color: #f1f5f9;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+body.dark .card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== NAVBAR ===== */
+body.dark .navbar {
+  background: linear-gradient(90deg, #020617, #0f172a) !important;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* ===== BUTTONS ===== */
+body.dark .btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border: none;
+}
+
+body.dark .btn-outline-light {
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+body.dark .btn-outline-light:hover {
+  background-color: #334155;
+}
+
+/* ===== INPUTS ===== */
+body.dark .form-control {
+  background-color: #1e293b;
+  color: #ffffff;
+  border: 1px solid #334155;
+}
+
+body.dark .form-control::placeholder {
+  color: #94a3b8;
+}
+
+/* ===== TEXT ===== */
+body.dark .text-muted {
+  color: #94a3b8 !important;
+}
+
+/* ===== ALERTS ===== */
+body.dark .alert-info {
+  background-color: #1e3a8a;
+  color: #e0f2fe;
+  border: none;
+}
+
+body.dark .alert-danger {
+  background-color: #7f1d1d;
+  color: #fecaca;
+  border: none;
+}
+
+/* ===== LIST ===== */
+body.dark .list-group-item {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+/* ===== SCROLLBAR ===== */
+body.dark ::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+  background: #1f2328;
+  border-radius: 10px;
+}
+
+/* ===== CHART FIX ===== */
+body.dark .recharts-wrapper {
+  color: #e2e8f0;
+}
+
+.card {
+  background: #1e293b;
+  border: none;
+  border-radius: 12px;
+}
+
+.text-muted {
+  color: #94a3b8 !important;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  transition: 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.insight-card {
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #f8fafc;
+}
+
+.insight-card {
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.insight-text {
+  color: #f8fafc !important;
+}

@@ -41,13 +41,21 @@ const TransactionList = () => {
       .catch((err) => setError(err.response?.data?.message || err.response?.data?.error || 'Failed to delete.'));
   };
 
-  const filtered = transactions.filter((tx) => {
-    if (filterType !== 'all' && tx.type !== filterType) return false;
-    if (filterCategory && tx.categoryId?._id !== filterCategory && tx.categoryId !== filterCategory) return false;
-    return true;
-  });
+    const filtered = transactions
+    .filter((tx) => {
+      api.get('/transactions?sort=-date')
+      if (filterType !== 'all' && tx.type !== filterType) return false;
+      if (
+        filterCategory &&
+        tx.categoryId?._id !== filterCategory &&
+        tx.categoryId !== filterCategory
+      ) return false;
+      return true;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  const formatCurrency = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  const formatCurrency = (n) =>
+  `₹${Number(n).toLocaleString('en-IN')}`;
 
   if (loading) {
     return (
